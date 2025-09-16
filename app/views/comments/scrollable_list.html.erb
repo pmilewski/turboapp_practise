@@ -1,0 +1,4 @@
+<%= turbo_frame_tag "comments-pagy-#{@pagy.page}" do %>
+  <%= render @comments %>
+  <%= render 'comments/next_page' %>
+<% end %>
