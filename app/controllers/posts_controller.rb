@@ -3,7 +3,7 @@ class PostsController < ApplicationController
 
   # GET /posts or /posts.json
   def index
-    @pagy, @posts = pagy(Post.order(created_at: :desc), limit: 5)
+    @pagy, @posts = pagy_countless(Post.order(created_at: :desc), limit: 5)
 
     if params[:page]
       render "scrollable_list"

@@ -3,7 +3,7 @@ class CommentsController < ApplicationController
 
   # GET /comments or /comments.json
   def index
-    @pagy, @comments = pagy(Comment.order(created_at: :desc), limit: 5)
+    @pagy, @comments = pagy_countless(Comment.order(created_at: :desc), limit: 5)
 
     if params[:page]
       render "scrollable_list"
