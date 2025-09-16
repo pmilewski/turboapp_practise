@@ -8,6 +8,14 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 
-150.times do
-  Movie.create(title: Faker::Movie.unique.title)
+unless Movie.any?
+  150.times do
+    Movie.create(title: Faker::Movie.unique.title)
+  end
+end
+
+unless Comment.any?
+  100.times do
+    Comment.create(body: Faker::Quote.famous_last_words)
+  end
 end
