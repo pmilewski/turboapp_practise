@@ -14,7 +14,7 @@ class MoviesTest < ApplicationSystemTestCase
     visit movies_url
     click_on "New movie"
 
-    fill_in "Title", with: @movie.title
+    fill_in "Title", with: "#{@movie.title}_#{Movie.count}"
     click_on "Create Movie"
 
     assert_text "Movie was successfully created"

@@ -12,14 +12,12 @@ class PostsTest < ApplicationSystemTestCase
 
   test "should create post" do
     visit posts_url
-    click_on "New post"
 
     fill_in "Body", with: @post.body
     fill_in "Title", with: @post.title
     click_on "Create Post"
 
     assert_text "Post was successfully created"
-    click_on "Back"
   end
 
   test "should update Post" do

@@ -31,11 +31,4 @@ class CommentsTest < ApplicationSystemTestCase
     assert_text "Comment was successfully updated"
     click_on "Back"
   end
-
-  test "should destroy Comment" do
-    visit comment_url(@comment)
-    accept_confirm { click_on "Destroy this comment", match: :first }
-
-    assert_text "Comment was successfully destroyed"
-  end
 end

@@ -55,8 +55,14 @@ class CommentsController < ApplicationController
   # DELETE /comments/1 or /comments/1.json
   def destroy
     @comment.destroy!
-
+    flash.now[:notice] = "Comment was successfully destroyed."
     respond_to do |format|
+      format.turbo_stream do
+        [
+          turbo_stream.remove(@comment),
+          turbo_stream.prepend("flash", partial: "layouts/flash")
+        ]
+      end
       format.html { redirect_to comments_path, notice: "Comment was successfully destroyed.", status: :see_other }
       format.json { head :no_content }
     end

@@ -22,6 +22,7 @@ class MessagesController < ApplicationController
         render turbo_stream:
           turbo_stream.update(@message, partial: "messages/form", locals: { message: @message })
       end
+      format.html
     end
   end
 
@@ -58,7 +59,7 @@ class MessagesController < ApplicationController
   def update
     respond_to do |format|
       if @message.update(message_params)
-        flash.now[:notice] = "Message was successfully created."
+        flash.now[:notice] = "Message was successfully updated."
         format.turbo_stream do
           render turbo_stream: [
             turbo_stream.update(@message, partial: "messages/message", locals: { message: @message }),
