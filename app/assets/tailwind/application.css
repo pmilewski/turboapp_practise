@@ -1,1 +1,14 @@
 @import "tailwindcss";
+
+#flash {
+  @apply fixed;
+  @apply z-2;
+  @apply right-2.5
+}
+
+#notice {
+  @apply bg-green-700;
+  @apply text-white;
+  @apply p-1.5;
+  @apply rounded-md;
+ }

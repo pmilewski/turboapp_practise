@@ -1,1 +1,5 @@
-<p class="color-green-600"><%= notice %></p>
+<div  data-controller="autohide">
+  <% flash.each do |key, value| %>
+    <%= content_tag :div, value, id: key %>
+  <% end %>
+</div>

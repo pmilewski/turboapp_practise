@@ -31,12 +31,13 @@ class MessagesController < ApplicationController
 
     respond_to do |format|
       if @message.save
+        flash.now[:notice] = "Message was successfully created."
         format.turbo_stream do
           render turbo_stream: [
             turbo_stream.update("new_message", partial: "messages/form", locals: { message: Message.new }),
             turbo_stream.prepend("messages", partial: "messages/message", locals: { message: @message }),
             turbo_stream.update("message_counter", Message.count),
-            turbo_stream.update("notice", "Message was successfully created.")
+            turbo_stream.prepend("flash", partial: "layouts/flash")
           ]
         end
         format.html { redirect_to @message, notice: "Message was successfully created." }
@@ -57,10 +58,11 @@ class MessagesController < ApplicationController
   def update
     respond_to do |format|
       if @message.update(message_params)
+        flash.now[:notice] = "Message was successfully created."
         format.turbo_stream do
           render turbo_stream: [
             turbo_stream.update(@message, partial: "messages/message", locals: { message: @message }),
-            turbo_stream.update("notice", "Message was successfully updated.")
+            turbo_stream.prepend("flash", partial: "layouts/flash")
           ]
         end
         format.html { redirect_to @message, notice: "Message was successfully updated.", status: :see_other }
@@ -78,13 +80,13 @@ class MessagesController < ApplicationController
   # DELETE /messages/1 or /messages/1.json
   def destroy
     @message.destroy!
-
+    flash.now[:notice] = "Message was successfully destroyed."
     respond_to do |format|
       format.turbo_stream do
         render turbo_stream: [
           turbo_stream.remove(@message),
           turbo_stream.update("message_counter", Message.count),
-          turbo_stream.update("notice", "Message was successfully destroyed.")
+          turbo_stream.prepend("flash", partial: "layouts/flash")
         ]
       end
 

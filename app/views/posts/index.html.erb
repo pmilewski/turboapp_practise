@@ -1,12 +1,13 @@
 <% content_for :title, "Posts" %>
+<div id="new_post">
+  <%= render "posts/form", post: Post.new %>
+</div>
 <h1>Posts</h1>
 <div id="posts">
   <% @posts.each do |post| %>
     <%= render post %>
     <p>
-      <%= link_to "Show this post", post %> |
-      <%= link_to "Edit this post", edit_post_path(post), data: {turbo_frame: "modal"} %>
+      <%= link_to "Show this post", post %>
     </p>
   <% end %>
 </div>
-<%= link_to "New post", new_post_path, data: { turbo_frame: "modal" } %>
