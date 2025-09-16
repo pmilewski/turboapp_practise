@@ -19,3 +19,10 @@ unless Comment.any?
     Comment.create(body: Faker::Quote.famous_last_words)
   end
 end
+
+
+unless Post.any?
+  100.times do
+    Post.create(title: Faker::Music.band, body: Faker::Quote.famous_last_words)
+  end
+end
