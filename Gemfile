@@ -72,3 +72,5 @@ gem "tailwindcss-rails", "~> 4.3"
 gem "htmlbeautifier", "~> 1.4"
 
 gem "pagy", "~> 9.4"
+
+gem "devise", "~> 4.9"

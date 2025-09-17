@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  devise_for :users
   get "static_pages/landing_page"
   get "static_pages/dashboard"
   resources :people do
@@ -36,5 +37,5 @@ Rails.application.routes.draw do
   # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
 
   # Defines the root path route ("/")
-  root "home#index"
+  root "static_pages#landing_page"
 end
