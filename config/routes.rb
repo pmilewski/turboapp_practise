@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get "static_pages/landing_page"
+  get "static_pages/dashboard"
   resources :people do
     member do
       get :hovercard
