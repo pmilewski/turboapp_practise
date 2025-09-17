@@ -74,3 +74,5 @@ gem "htmlbeautifier", "~> 1.4"
 gem "pagy", "~> 9.4"
 
 gem "devise", "~> 4.9"
+
+gem "acts_as_votable", "~> 0.14.0"
