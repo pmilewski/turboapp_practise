@@ -19,6 +19,14 @@ class TasksController < ApplicationController
   def edit
   end
 
+  def preview
+    @preview_task = Task.new(task_params)
+
+    respond_to do |format|
+      format.turbo_stream
+    end
+  end
+
   # POST /tasks or /tasks.json
   def create
     @task = Task.new(task_params)

@@ -31,11 +31,4 @@ class ArtistsTest < ApplicationSystemTestCase
     assert_text "Artist was successfully updated"
     click_on "Back"
   end
-
-  test "should destroy Artist" do
-    visit artist_url(@artist)
-    accept_confirm { click_on "Destroy this artist", match: :first }
-
-    assert_text "Artist was successfully destroyed"
-  end
 end

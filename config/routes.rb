@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
-  resources :tasks
+  resources :tasks do
+    collection do
+      post :preview
+    end
+  end
   resources :artists
   resources :comments
   get "home/index"
