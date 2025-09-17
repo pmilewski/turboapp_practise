@@ -1,0 +1,17 @@
+<%= turbo_frame_tag dom_id(@person, :thumbnail) do %>
+  <div>
+    <strong class="block font-medium mb-1">Address:</strong>
+    <%= @person.address %>
+  </div>
+  <div>
+    <strong class="block font-medium mb-1">Phone:</strong>
+    <%= @person.phone %>
+  </div>
+  <div>
+    <strong class="block font-medium mb-1">Date of birth:</strong>
+    <%= @person.date_of_birth %>
+  </div>
+  <div>
+    <%= link_to "Show", @person, target: "_top" %>
+  </div>
+<% end %>

@@ -1,14 +1,13 @@
 @import "tailwindcss";
 
 #flash {
-  @apply fixed;
-  @apply z-2;
-  @apply right-2.5
+  @apply fixed z-2 right-2.5;
 }
 
 #notice {
-  @apply bg-green-700;
-  @apply text-white;
-  @apply p-1.5;
-  @apply rounded-md;
+  @apply bg-green-700 text-white p-1.5 rounded-md;
+ }
+
+ .hoverContent {
+  @apply hidden group-hover:block absolute p-2.5 rounded;
  }
