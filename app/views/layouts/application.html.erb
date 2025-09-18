@@ -28,6 +28,7 @@
         <%= render partial: 'layouts/flash' %>
       </div>
       <%= yield %>
+      <%= turbo_frame_tag :cookies_modal, src: cookies_path  unless session[:cookies_accepted] %>
     </main>
   </body>
 </html>
