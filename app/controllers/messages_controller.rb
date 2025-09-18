@@ -1,5 +1,6 @@
 class MessagesController < ApplicationController
-  before_action :set_message, only: %i[ show edit update destroy ]
+  before_action :authenticate_user!
+  before_action :set_message, only: %i[ show edit update destroy upvote downvote ]
 
   # GET /messages or /messages.json
   def index
@@ -18,10 +19,7 @@ class MessagesController < ApplicationController
   # GET /messages/1/edit
   def edit
     respond_to do |format|
-      format.turbo_stream do
-        render turbo_stream:
-          turbo_stream.update(@message, partial: "messages/form", locals: { message: @message })
-      end
+      format.turbo_stream { render_form }
       format.html
     end
   end
@@ -29,81 +27,115 @@ class MessagesController < ApplicationController
   # POST /messages or /messages.json
   def create
     @message = Message.new(message_params)
-
-    respond_to do |format|
-      if @message.save
-        flash.now[:notice] = "Message was successfully created."
-        format.turbo_stream do
-          render turbo_stream: [
-            turbo_stream.update("new_message", partial: "messages/form", locals: { message: Message.new }),
-            turbo_stream.prepend("messages", partial: "messages/message", locals: { message: @message }),
-            turbo_stream.update("message_counter", Message.count),
-            turbo_stream.prepend("flash", partial: "layouts/flash")
-          ]
-        end
-        format.html { redirect_to @message, notice: "Message was successfully created." }
-        format.json { render :show, status: :created, location: @message }
-      else
-        format.turbo_stream do
-          render turbo_stream: [
-            turbo_stream.update("new_message", partial: "messages/form", locals: { message: @message })
-          ]
-        end
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @message.errors, status: :unprocessable_entity }
-      end
+    if @message.save
+      handle_success("Message was successfully created.", :create)
+    else
+      handle_failure(:create)
     end
   end
 
   # PATCH/PUT /messages/1 or /messages/1.json
   def update
-    respond_to do |format|
-      if @message.update(message_params)
-        flash.now[:notice] = "Message was successfully updated."
-        format.turbo_stream do
-          render turbo_stream: [
-            turbo_stream.update(@message, partial: "messages/message", locals: { message: @message }),
-            turbo_stream.prepend("flash", partial: "layouts/flash")
-          ]
-        end
-        format.html { redirect_to @message, notice: "Message was successfully updated.", status: :see_other }
-        format.json { render :show, status: :ok, location: @message }
-      else
-        format.turbo_stream do
-          render turbo_stream: turbo_stream.update(@message, partial: "messages/form", locals: { message: @message })
-        end
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @message.errors, status: :unprocessable_entity }
-      end
+    if @message.update(message_params)
+      handle_success("Message was successfully updated.", :update)
+    else
+      handle_failure(:update)
     end
+  end
+
+  def upvote
+    vote_and_respond(:upvote, "upvoted")
+  end
+
+  def downvote
+    vote_and_respond(:downvote, "downvoted")
   end
 
   # DELETE /messages/1 or /messages/1.json
   def destroy
     @message.destroy!
-    flash.now[:notice] = "Message was successfully destroyed."
-    respond_to do |format|
-      format.turbo_stream do
-        render turbo_stream: [
-          turbo_stream.remove(@message),
-          turbo_stream.update("message_counter", Message.count),
-          turbo_stream.prepend("flash", partial: "layouts/flash")
-        ]
-      end
-
-      format.html { redirect_to messages_path, notice: "Message was successfully destroyed.", status: :see_other }
-      format.json { head :no_content }
-    end
+    handle_success("Message was successfully destroyed.",  :destroy)
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_message
-      @message = Message.find(params.expect(:id))
-    end
 
-    # Only allow a list of trusted parameters through.
-    def message_params
-      params.expect(message: [ :body ])
+  def set_message
+    @message = Message.find(params[:id])
+  end
+
+  def message_params
+    params.require(:message).permit(:body)
+  end
+
+  def vote_and_respond(vote_type, flash_message)
+    if @message.send("#{vote_type}!", current_user)
+      flash.now[:notice] = "Message was successfully #{flash_message}."
+    else
+      flash.now[:alert] = "An error occurred while voting."
     end
+    respond_to_vote
+  end
+
+  def handle_success(notice, action)
+    flash.now[:notice] = notice
+    respond_to do |format|
+      format.turbo_stream { render_success_turbo_stream(action) }
+      format.html { redirect_to @message, status: :see_other }
+      format.json { render :show, status: :ok, location: @message }
+    end
+  end
+
+  def handle_failure(action)
+    respond_to do |format|
+      format.turbo_stream { render_failure_turbo_stream(action) }
+      format.html { render :new, status: :unprocessable_entity }
+      format.json { render json: @message.errors, status: :unprocessable_entity }
+    end
+  end
+
+  def render_success_turbo_stream(action)
+    case action
+    when :create
+      render turbo_stream: [
+        turbo_stream.update("new_message", partial: "messages/form", locals: { message: Message.new }),
+        turbo_stream.prepend("messages", partial: "messages/message", locals: { message: @message }),
+        turbo_stream.update("message_counter", Message.count),
+        turbo_stream.prepend("flash", partial: "layouts/flash")
+      ]
+    when :update
+      render turbo_stream: [
+        turbo_stream.update(@message, partial: "messages/message", locals: { message: @message }),
+        turbo_stream.prepend("flash", partial: "layouts/flash")
+      ]
+    when :destroy
+      render turbo_stream: [
+        turbo_stream.remove(@message),
+        turbo_stream.update("message_counter", Message.count),
+        turbo_stream.prepend("flash", partial: "layouts/flash")
+      ]
+    end
+  end
+
+  def render_failure_turbo_stream(action)
+    case action
+    when :create
+      render turbo_stream: turbo_stream.update("new_message", partial: "messages/form", locals: { message: @message })
+    when :update
+      render turbo_stream: turbo_stream.update(@message, partial: "messages/form", locals: { message: @message })
+    end
+  end
+
+  def render_form
+    render turbo_stream: turbo_stream.update(@message, partial: "messages/form", locals: { message: @message })
+  end
+
+  def respond_to_vote
+    respond_to do |format|
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.update(@message, partial: "messages/message", locals: { message: @message })
+      end
+      format.html { redirect_to messages_path, status: :see_other }
+      format.json { render :show, status: :ok, location: @message }
+    end
+  end
 end

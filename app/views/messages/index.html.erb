@@ -1,6 +1,6 @@
 <% content_for :title, "Messages" %>
 <h1>Messages <span id="message_counter"><%= Message.count %></span></h1>
-<div id="new_message">
+<div id="new_message" class="border-y-4 my-8 py-8">
   <%= render partial: 'messages/form', locals: { message: Message.new } %>
 </div>
 <div id="messages">

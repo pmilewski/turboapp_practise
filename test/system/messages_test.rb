@@ -1,8 +1,11 @@
 require "application_system_test_case"
 
 class MessagesTest < ApplicationSystemTestCase
+  include Devise::Test::IntegrationHelpers # Rails >= 5
+
   setup do
     @message = messages(:one)
+    sign_in users(:one)
   end
 
   test "visiting the index" do

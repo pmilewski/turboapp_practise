@@ -1,12 +1,23 @@
-<div id="<%= dom_id message %>">
+<div id="<%= dom_id message %>" class="border-b">
   <p>
     <strong>Body:</strong>
     <%= message.body %>
   </p>
-  <p>
+  <div class="flex justify-between">
+    <div class="grid">
+      <%= upvote_button(message) %>
+      <%= downvote_button(message) %>
+    </div>
+    <div class="grid">
+      <div>Votes: <%= message.cached_votes_total %></div>
+      <div>Score: <%= message.cached_votes_score %></div>
+      <div>Upvotes: <%= message.cached_votes_up %></div>
+      <div>Downvotes: <%= message.cached_votes_down %></div>
+    </div>
+    <div class="grid">
       <%= link_to "Show this message", message %>
-      <%= button_to "Edit this message", edit_message_path(message), method: :post %> |
+      <%= button_to "Edit this message", edit_message_path(message), method: :post %>
       <%= button_to "Destroy this message", message, method: :delete %>
-  </p>
-
+    </div>
+  </div>
 </div>

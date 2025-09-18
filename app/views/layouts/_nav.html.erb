@@ -1,8 +1,16 @@
 <nav>
+  <%= link_to "Home", root_path %> |
+  <%= link_to "People", people_path %> |
+  <%= link_to "Tasks", tasks_path %> |
+  <%= link_to "Artists", artists_path %> |
+  <%= link_to "Comments", comments_path %> |
+  <%= link_to "Posts", posts_path %> |
+  <%= link_to "Movies", movies_path %> |
   <% if user_signed_in? %>
     <div class="float-left">
       Signed in as <strong><%= current_user.email %></strong>
     </div>
+    <%= link_to "Messages", messages_path %> |
     <%= link_to "Profile", edit_user_registration_path %> |
     <%= link_to "Dashboard", static_pages_dashboard_path %> |
     <%= button_to "Logout", destroy_user_session_path, method: :delete, data: { turbo: false }, form: { class: "inline-block mx-2" } %>

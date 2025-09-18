@@ -8,6 +8,16 @@
   @apply bg-green-700 text-white p-1.5 rounded-md;
  }
 
- .hoverContent {
+.hoverContent {
   @apply hidden group-hover:block absolute p-2.5 rounded;
  }
+
+.upvoted,
+.downvoted {
+  opacity: 0.1;
+}
+
+.upvoted:hover,
+.downvoted:hover {
+  opacity: unset;
+}
