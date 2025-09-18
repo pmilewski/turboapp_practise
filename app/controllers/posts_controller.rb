@@ -16,11 +16,16 @@ class PostsController < ApplicationController
 
   # GET /posts/new
   def new
-    @post = Post.new
+    @post = Post.new post_params
+    @post.valid? if post_params.present?
   end
 
   # GET /posts/1/edit
   def edit
+    if post_params.present?
+      @post.assign_attributes(post_params)
+      @post.valid?
+    end
   end
 
   # POST /posts or /posts.json
@@ -80,6 +85,6 @@ class PostsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def post_params
-      params.expect(post: [ :title, :body ])
+      params.fetch(:post, {}).permit(:title, :body, :access, :passcode)
     end
 end

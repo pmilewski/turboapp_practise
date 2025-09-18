@@ -2,7 +2,6 @@
   <% if post.errors.any? %>
     <div style="color: red">
       <h2><%= pluralize(post.errors.count, "error") %> prohibited this post from being saved:</h2>
-
       <ul>
         <% post.errors.each do |error| %>
           <li><%= error.full_message %></li>
@@ -10,17 +9,45 @@
       </ul>
     </div>
   <% end %>
-
   <div>
     <%= form.label :title, style: "display: block" %>
     <%= form.text_field :title %>
   </div>
-
+  <div>
+  </div>
   <div>
     <%= form.label :body, style: "display: block" %>
     <%= form.textarea :body %>
   </div>
-
+  <div id="turbo-stream-target" class="text-red-500"></div>
+  <div data-controller="form-element">
+    <%= form.button "Validate", 
+      formAction: new_post_path, 
+      formMethod: :get,
+      hidden: true,
+      data: { 
+        turbo_frame: "passcode_field",
+        form_element_target: "submitBtn" 
+      }
+    %>
+    <div>
+      <%= form.label :access, style: "display: block" %>
+      <%= form.select :access, Post.accesses.keys.map { |k| [k.humanize, k] },
+        { include_blank: "Select an access" },
+        data: { action: "change->form-element#remoteSubmit" } %>
+    </div>
+  </div>
+  <%= turbo_frame_tag "passcode_field" do %>
+    <% if post.passcode_required? %>
+      <div>
+        <%= form.label :passcode, style: "display: block" %>
+        <%= form.text_field :passcode %>
+      </div>
+      <%= turbo_stream.update "turbo-stream-target", plain: "Passcode required!!!" %>
+    <% else %>
+      <%= turbo_stream.update "turbo-stream-target", plain: "" %>
+    <% end %>
+  <% end %>
   <div>
     <%= form.submit %>
   </div>
