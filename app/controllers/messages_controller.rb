@@ -1,10 +1,10 @@
 class MessagesController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_message, only: %i[ show edit update destroy upvote downvote ]
+  before_action :set_message, only: %i[ show edit update destroy upvote downvote bookmark ]
 
   # GET /messages or /messages.json
   def index
-    @messages = Message.order(created_at: :desc)
+    @messages = Message.order(cached_weighted_like_score: :desc, created_at: :desc)
   end
 
   # GET /messages/1 or /messages/1.json
@@ -41,6 +41,10 @@ class MessagesController < ApplicationController
     else
       handle_failure(:update)
     end
+  end
+
+  def bookmark
+    vote_and_respond(:bookmark, "bookmarked")
   end
 
   def upvote

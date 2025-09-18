@@ -7,12 +7,13 @@
     <div class="grid">
       <%= upvote_button(message) %>
       <%= downvote_button(message) %>
+      <%= bookmark_button(message) %>
     </div>
     <div class="grid">
-      <div>Votes: <%= message.cached_votes_total %></div>
-      <div>Score: <%= message.cached_votes_score %></div>
-      <div>Upvotes: <%= message.cached_votes_up %></div>
-      <div>Downvotes: <%= message.cached_votes_down %></div>
+      <div>Votes: <%= message.cached_scoped_like_votes_total %></div>
+      <div>Score: <%= message.cached_scoped_like_votes_score %></div>
+      <div>Upvotes: <%= message.cached_scoped_like_votes_up %></div>
+      <div>Downvotes: <%= message.cached_scoped_like_votes_down %></div>
     </div>
     <div class="grid">
       <%= link_to "Show this message", message %>

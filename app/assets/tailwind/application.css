@@ -13,11 +13,13 @@
  }
 
 .upvoted,
-.downvoted {
+.downvoted,
+.bookmarked {
   opacity: 0.1;
 }
 
 .upvoted:hover,
-.downvoted:hover {
+.downvoted:hover,
+.bookmarked:hover {
   opacity: unset;
 }
