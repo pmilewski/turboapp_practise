@@ -14,10 +14,10 @@ class AddressesTest < ApplicationSystemTestCase
     visit addresses_url
     click_on "New address"
 
-    fill_in "City", with: @address.city
-    fill_in "Country", with: @address.country
+    select @address.country_label, from: "Country"
+    select @address.state_label, from: "State"
+    select @address.city_label, from: "City"
     fill_in "Details", with: @address.details
-    fill_in "State", with: @address.state
     click_on "Create Address"
 
     assert_text "Address was successfully created"
@@ -28,10 +28,10 @@ class AddressesTest < ApplicationSystemTestCase
     visit address_url(@address)
     click_on "Edit this address", match: :first
 
-    fill_in "City", with: @address.city
-    fill_in "Country", with: @address.country
+    select @address.country_label, from: "Country"
+    select @address.state_label, from: "State"
+    select @address.city_label, from: "City"
     fill_in "Details", with: @address.details
-    fill_in "State", with: @address.state
     click_on "Update Address"
 
     assert_text "Address was successfully updated"
