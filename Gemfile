@@ -78,3 +78,5 @@ gem "devise", "~> 4.9"
 gem "acts_as_votable", "~> 0.14.0"
 
 gem "city-state", "~> 1.1"
+
+gem "ransack", "~> 4.3"

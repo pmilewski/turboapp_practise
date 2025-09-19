@@ -42,7 +42,7 @@ class CustomersTest < ApplicationSystemTestCase
 
   test "should destroy Customer" do
     visit customer_url(@customer)
-    accept_confirm { click_on "Destroy this customer", match: :first }
+    click_on "Destroy this customer", match: :first
 
     assert_text "Customer was successfully destroyed"
   end

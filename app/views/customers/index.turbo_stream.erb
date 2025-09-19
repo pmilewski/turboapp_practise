@@ -1,0 +1,21 @@
+<%= turbo_stream.append :customers do %>
+  <% if @customers.any? %>
+    <% @customers.each do |customer| %>
+      <div class="flex justify-between items-center py-3 border-b">
+        <%= render customer %>
+        <div>
+          <%= link_to "Show", customer, class: "btn btn-secondary" %>
+          <%= link_to "Edit", edit_customer_path(customer), class: "btn btn-secondary" %>
+          <%= button_to "Destroy", customer, method: :delete, class: "btn btn-danger", data: { turbo_confirm: "Are you sure?" } %>
+        </div>
+      </div>
+    <% end %>
+  <% else %>
+    <p class="text-center my-10">No customers found.</p>
+  <% end %>
+<% end %>
+<% if @pagy.next %>
+  <%= turbo_stream.replace :pagination do %>
+    <%= turbo_frame_tag :pagination, src: customers_path(format: :turbo_stream, page: @pagy.next, q: params[:q]&.to_unsafe_h), loading: :lazy %>
+  <% end %>
+<% end %>

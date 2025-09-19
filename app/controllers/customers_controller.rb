@@ -3,7 +3,14 @@ class CustomersController < ApplicationController
 
   # GET /customers or /customers.json
   def index
-    @customers = Customer.order(created_at: :desc)
+    @q = Customer.order(created_at: :desc).ransack(search_params[:q])
+    customers = @q.result(distinct: true)
+    @pagy, @customers = pagy_countless(customers, limit: 5)
+
+    respond_to do |format|
+      format.html
+      format.turbo_stream
+    end
   end
 
   # GET /customers/1 or /customers/1.json
@@ -66,5 +73,9 @@ class CustomersController < ApplicationController
     # Only allow a list of trusted parameters through.
     def customer_params
       params.expect(customer: [ :first_name, :last_name, :birthdate, :phone, :description ])
+    end
+
+    def search_params
+      params.permit(:format, :page, q: :first_name_or_last_name_or_description_cont)
     end
 end
