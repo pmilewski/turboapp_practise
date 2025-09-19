@@ -1,12 +1,14 @@
 <nav>
   <%= link_to "Home", root_path %> |
+  <%= link_to "Customers", customers_path %> |
   <%= link_to "People", people_path %> |
   <%= link_to "Tasks", tasks_path %> |
   <%= link_to "Artists", artists_path %> |
   <%= link_to "Comments", comments_path %> |
   <%= link_to "Posts", posts_path %> |
   <%= link_to "Movies", movies_path %> |
-  <%= link_to "Addresses", addresses_path %> |
+  <%= link_to "Addresses", addresses_path %>
+  <br>
   <% if user_signed_in? %>
     <div class="float-left">
       Signed in as <strong><%= current_user.email %></strong>

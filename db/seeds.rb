@@ -37,3 +37,14 @@ end unless Artist.any?
     date_of_birth: Faker::Date.birthday(min_age: 18, max_age: 65)
   )
 end unless Person.any?
+
+
+50.times do
+  Customer.create!(
+    first_name: Faker::Name.first_name,
+    last_name: Faker::Name.last_name,
+    birthdate: Faker::Date.birthday(min_age: 18, max_age: 65),
+    phone: Faker::PhoneNumber.phone_number,
+    description: Faker::Lorem.paragraph
+  )
+end unless Customer.any?

@@ -1,0 +1,10 @@
+<div id="<%= dom_id customer %>">
+  <% Customer::EDITABLE_ATTRS.each do |attr| %>
+    <%= turbo_frame_tag attr do %>
+      <div class="mb-2">
+        <strong><%= attr.to_s.humanize %>:</strong>
+        <%= link_to customer[attr], [:edit, customer, attribute: attr] %>
+      </div>
+    <% end %>
+  <% end %>
+</div>

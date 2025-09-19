@@ -1,0 +1,22 @@
+<%= turbo_frame_tag params[:attribute] do %>
+  <%= form_with(
+    model: customer,
+    url: [customer, attribute: params[:attribute]],
+    class: "contents") do |form|
+  %>
+  <% if customer.errors.any? %>
+    <div id="error_explanation" class="bg-red-50 text-red-500 p-3 rounded mt-3">
+      <%= pluralize(customer.errors.count, "error") %> prohibited this customer from being saved:
+      <ul class="list-disc ml-6">
+        <% customer.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="my-5">
+    <%= form.label params[:attribute] %>
+    <%= form.text_field params[:attribute], onchange: "this.form.requestSubmit()" %>
+  </div>
+<% end %>
+<% end%>
