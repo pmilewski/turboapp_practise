@@ -25,6 +25,6 @@
 }
 
 .cookies-modal {
-  @apply absolute left-2 bottom-2 z-10 bg-gray-500 p-2 break-all rounded-lg min-w-md max-w-lg;
+  @apply sticky bottom-2 z-10 bg-gray-500 p-2 break-all rounded-lg min-w-md max-w-lg;
 
 }

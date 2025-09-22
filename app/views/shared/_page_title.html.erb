@@ -1,0 +1,11 @@
+<% if new_notifications_count.positive? %>
+  <%= favicon_link_tag "favicon-message.png", rel: "shortcut icon", type: "image/png" %>
+  <title id="title-notifications"
+             data-controller="title-blink" 
+             data-title-blink-new-title-value="(<%= new_notifications_count.to_s %>) Alerts">
+    <%= content_for(:title) || "Turboapp" %>
+  </title>
+<% else %>
+  <%= favicon_link_tag "favicon.png", rel: "shortcut icon", type: "image/png" %>
+  <title id="title-notifications"><%= content_for(:title) || "Turboapp" %></title>
+<% end %>
