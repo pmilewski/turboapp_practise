@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "application": [
+        "app/javascript/application.js"
+      ],
+      "@hotwired/turbo-rails": [
+        "vendor/javascript/turbo.min.js"
+      ],
+      "@hotwired/stimulus": [
+        "vendor/javascript/stimulus.min.js"
+      ],
+      "@hotwired/stimulus-loading": [
+        "vendor/javascript/stimulus-loading.js"
+      ],
+      "controllers/*": [
+        "app/javascript/controllers/*"
+      ],
+      "sortablejs": [
+        "vendor/javascript/sortablejs.js"
+      ]
+    }
+  },
+  "include": [
+    "app/javascript/**/*.js",
+    "vendor/javascript/**/*.js"
+  ]
+}

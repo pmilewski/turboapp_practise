@@ -1,5 +1,5 @@
 <% content_for :title, "Lists" %>
-<div id="lists" class="flex">
+<div id="lists" data-controller="sortable" class="flex" >
   <% if @lists.any? %>
     <% @lists.each do |list| %>
       <div class="border p-5 m-5 w-2xl">
