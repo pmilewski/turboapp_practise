@@ -75,3 +75,7 @@ gem "city-state", "~> 1.1"
 gem "ransack", "~> 4.3"
 gem "redis"
 gem "kredis"
+
+gem "ranked-model", "~> 0.4.11"
+
+gem "requestjs-rails", "~> 0.0.13"

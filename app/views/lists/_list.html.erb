@@ -1,10 +1,12 @@
 <div id="<%= dom_id list %>" class="w-full sm:w-auto my-5 space-y-5">
   <div>
     <strong class="block font-medium mb-1">List:</strong>
+    <%= list.id %>
     <%= list.name %>
+    <%= list.row_order %>
   </div>
   <div class="border p-5 m-5">
-    <% list.tasks.each do |task| %>
+    <% list.tasks.rank(:row_order).each do |task| %>
       <%= render partial: "lists/task", locals: { task: task } %>
     <% end %>
   </div>

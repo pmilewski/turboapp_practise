@@ -1,13 +1,23 @@
 class ListsController < ApplicationController
-  before_action :set_list, only: %i[ show edit update destroy ]
+  before_action :set_list, only: %i[ show edit update destroy sort ]
 
   # GET /lists or /lists.json
   def index
-    @lists = List.includes(:tasks)
+    @lists = List.includes(:tasks).rank(:row_order)
+  end
+
+  def sort
+    @list.update(row_order_position: params[:row_order_position])
+    head :no_content
   end
 
   # GET /lists/1 or /lists/1.json
   def show
+  end
+
+  # GET /lists/new
+  def new
+    head :no_content
   end
 
   # GET /lists/new

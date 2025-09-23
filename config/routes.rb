@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
-  resources :lists
+  resources :lists do
+    member do
+      put :sort
+    end
+  end
   resources :notifications
   resources :customers
   resources :addresses
