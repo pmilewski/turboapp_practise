@@ -17,6 +17,8 @@
   </head>
   <body>
     <%= turbo_frame_tag :modal %>
+    <%= turbo_stream_from :global_notifications_stream %>
+    <%= turbo_stream_from :online_users_stream, channel: OnlineUsersChannel %>
     <header>
       <%= render partial: 'layouts/nav' %>
     </header>
@@ -24,7 +26,6 @@
       <div id="flash">
         <%= render partial: 'layouts/flash' %>
       </div>
-      <%= turbo_stream_from :global_notifications_stream %>
       <%= yield %>
       <%= turbo_frame_tag :cookies_modal, src: cookies_path  unless session[:cookies_accepted] %>
     </main>

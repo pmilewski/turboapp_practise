@@ -66,17 +66,12 @@ group :test do
 end
 
 gem "tailwindcss-ruby", "~> 4.1"
-
 gem "tailwindcss-rails", "~> 4.3"
-
 gem "htmlbeautifier", "~> 1.4"
-
 gem "pagy", "~> 9.4"
-
 gem "devise", "~> 4.9"
-
 gem "acts_as_votable", "~> 0.14.0"
-
 gem "city-state", "~> 1.1"
-
 gem "ransack", "~> 4.3"
+gem "redis"
+gem "kredis"
