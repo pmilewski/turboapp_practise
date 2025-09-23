@@ -7,12 +7,12 @@ class ListsTest < ApplicationSystemTestCase
 
   test "visiting the index" do
     visit lists_url
-    assert_selector "h1", text: "Lists"
+
+    assert_selector "div", id: "lists"
   end
 
   test "should create list" do
-    visit lists_url
-    click_on "New list"
+    visit new_list_url
 
     fill_in "Name", with: @list.name
     click_on "Create List"

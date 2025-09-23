@@ -17,6 +17,10 @@
     <%= form.text_field :name %>
   </div>
   <div class="my-5">
+    <%= form.label :list_id, "List" %>
+    <%= form.collection_select :list_id, List.all, :id, :name %>
+  </div>
+  <div class="my-5">
     <%= form.label :body %>
     <%= form.textarea :body, rows: 4 %>
   </div>

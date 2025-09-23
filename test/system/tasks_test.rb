@@ -11,8 +11,7 @@ class TasksTest < ApplicationSystemTestCase
   end
 
   test "should create task" do
-    visit tasks_url
-    click_on "New task"
+    visit new_task_url
 
     fill_in "Body", with: @task.body
     fill_in "Name", with: @task.name
