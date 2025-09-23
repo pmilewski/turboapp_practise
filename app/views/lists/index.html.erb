@@ -2,7 +2,7 @@
 <div id="lists" data-controller="sortable" class="flex" >
   <% if @lists.any? %>
     <% @lists.each do |list| %>
-      <div data-sortable-id="<%= list.id %>" class="border p-5 m-5 w-2xl">
+      <div data-sortable-update-url="<%= sort_list_path(list) %>" class="border p-5 m-5 w-2xl">
         <%= render list %>
       </div>
     <% end %>

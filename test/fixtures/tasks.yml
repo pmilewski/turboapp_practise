@@ -3,7 +3,9 @@
 one:
   name: MyString
   body: MyTextMyTextMyText
+  list: one
 
 two:
   name: MyString
   body: MyTextMyTextMyTextMyText
+  list: one

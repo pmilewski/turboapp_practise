@@ -19,6 +19,9 @@ Rails.application.routes.draw do
     collection do
       post :preview
     end
+    member do
+      put :sort
+    end
   end
   resources :artists
   resources :comments

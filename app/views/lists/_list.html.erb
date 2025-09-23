@@ -5,9 +5,11 @@
     <%= list.name %>
     <%= list.row_order %>
   </div>
-  <div class="border p-5 m-5">
+  <div data-controller="sortable" data-sortable-group-value="tasks" data-sortable-list-id="<%= list.id %>" class="border p-5 m-5">
     <% list.tasks.rank(:row_order).each do |task| %>
-      <%= render partial: "lists/task", locals: { task: task } %>
+      <div data-sortable-update-url="<%= sort_task_path(task.id) %>" >
+        <%= render partial: "lists/task", locals: { task: task } %>
+      </div>
     <% end %>
   </div>
 </div>
