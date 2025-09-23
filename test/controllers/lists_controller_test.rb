@@ -45,4 +45,16 @@ class ListsControllerTest < ActionDispatch::IntegrationTest
 
     assert_redirected_to lists_url
   end
+
+  test "should sort list" do
+    put sort_list_url(@list), params: { row_order_position: 0 }
+
+    assert_response :no_content
+  end
+
+  test "sorting list updates its row_order" do
+    put sort_list_url(@list), params: { row_order_position: 1 }
+    assert_response :no_content
+    assert_not_nil @list.reload.row_order
+  end
 end

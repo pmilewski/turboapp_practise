@@ -45,4 +45,22 @@ class TasksControllerTest < ActionDispatch::IntegrationTest
 
     assert_redirected_to tasks_url
   end
+
+  test "should sort task and optionally move to another list" do
+    target_list = lists(:two)
+
+    put sort_task_url(@task), params: { row_order_position: 0, list_id: target_list.id }
+
+    assert_response :no_content
+    assert_equal target_list.id, @task.reload.list_id
+  end
+
+  test "should sort task within the same list when list_id not provided" do
+    current_list_id = @task.list_id
+
+    put sort_task_url(@task), params: { row_order_position: 1 }
+
+    assert_response :no_content
+    assert_equal current_list_id, @task.reload.list_id
+  end
 end
