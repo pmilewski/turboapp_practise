@@ -48,3 +48,13 @@ end unless Person.any?
     description: Faker::Lorem.paragraph
   )
 end unless Customer.any?
+
+unless List.any?
+  todo_list = List.create!(name: "TODO")
+  List.create!(name: "In progress")
+  List.create!(name: "Done")
+
+  5.times do
+    todo_list.tasks.create!(name: Faker::Name.name, body: Faker::Lorem.paragraph(sentence_count: 1))
+  end
+end
