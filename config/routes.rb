@@ -44,5 +44,9 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   get :cookies, to: "cookies#index"
+  get "counter", to: "counter#show"
+  post "increment", to: "counter#increment"
+  post "decrement", to: "counter#decrement"
+
   root "static_pages#landing_page"
 end

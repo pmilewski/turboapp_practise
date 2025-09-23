@@ -1,0 +1,10 @@
+<div>
+  <h1 class="font-bold text-4xl">Counter#show</h1>
+  <p>Find me in app/views/counter/show.html.erb</p>
+  <%= turbo_stream_from :counter1_stream %>
+  <%= button_to "+", increment_path, method: :post %>
+  <div id="counter1">
+    <%= @counter.value %>
+  </div>
+  <%= button_to "-", decrement_path, method: :post %>
+</div>
