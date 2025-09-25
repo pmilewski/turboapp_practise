@@ -3,7 +3,7 @@ class PeopleController < ApplicationController
 
   # GET /people or /people.json
   def index
-    @people = Person.all
+    @people = Person.order(created_at: :desc)
   end
 
   # GET /people/1 or /people/1.json
@@ -28,6 +28,7 @@ class PeopleController < ApplicationController
 
     respond_to do |format|
       if @person.save
+        Broadcasters::People::Created.new(@person).call
         format.html { redirect_to @person, notice: "Person was successfully created." }
         format.json { render :show, status: :created, location: @person }
       else
@@ -41,6 +42,7 @@ class PeopleController < ApplicationController
   def update
     respond_to do |format|
       if @person.update(person_params)
+        Broadcasters::People::Updated.new(@person).call
         format.html { redirect_to @person, notice: "Person was successfully updated.", status: :see_other }
         format.json { render :show, status: :ok, location: @person }
       else
@@ -55,6 +57,8 @@ class PeopleController < ApplicationController
     @person.destroy!
 
     respond_to do |format|
+      Broadcasters::People::Destroyed.new(@person).call
+
       format.html { redirect_to people_path, notice: "Person was successfully destroyed.", status: :see_other }
       format.json { head :no_content }
     end

@@ -8,6 +8,9 @@ class PeopleTest < ApplicationSystemTestCase
   test "visiting the index" do
     visit people_url
     assert_selector "h1", text: "People"
+    within "#people-counter" do
+      assert_text Person.count
+    end
   end
 
   test "should create person" do
