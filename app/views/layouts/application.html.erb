@@ -21,6 +21,9 @@
     <%= turbo_stream_from :online_users_stream, channel: OnlineUsersChannel %>
     <header>
       <%= render partial: 'layouts/nav' %>
+      <div id="permanent-audio-element" data-turbo-permanent>
+        <audio src="https://samples.ffmpeg.org/MPEG-4/fridayafternext_http.mp4" controls="true"></audio>
+      </div>
     </header>
     <main>
       <div id="flash">

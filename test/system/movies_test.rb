@@ -10,6 +10,16 @@ class MoviesTest < ApplicationSystemTestCase
     assert_selector "h1", text: "Movies"
   end
 
+  test "should have video element on movies page" do
+    visit movies_url
+    assert_selector "video"
+  end
+
+  test "should have navigation controller" do
+    visit movies_url
+    assert_selector "nav[data-controller='navigation']"
+  end
+
   test "should create movie" do
     visit movies_url
     click_on "New movie"
